@@ -1,0 +1,56 @@
+<ion-content style='background:url("assets/images/background.png")  no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; width:100%; margin 0 auto;' text-center>
+
+
+
+    <form [formGroup]="slideOneForm" text-center style="
+    margin-top: 5%;
+    margin-left: 10%;
+    margin-right: 10%;">
+
+        <ion-item class="bgcolor">
+            <ion-label floating> User ID:</ion-label>
+            <ion-input formControlName="firstName" type="text
+            " [class.invalid]="!slideOneForm.controls.firstName.valid && 
+            (slideOneForm.controls.firstName.dirty || submitAttempt)">
+            </ion-input>
+        </ion-item>
+
+        <ion-item no-lines class="bgcolor">
+            <p *ngIf="!slideOneForm.controls.firstName.valid 
+         && (slideOneForm.controls.firstName.dirty || submitAttempt)" class="error-message"> Please enter valid User ID.</p>
+        </ion-item>
+
+        <ion-item class="bgcolor">
+            <ion-label floating>Password </ion-label>
+            <ion-input formControlName="lastName" type="password" [class.invalid]="!slideOneForm.controls.lastName.valid 
+            && (slideOneForm.controls.lastName.dirty || submitAttempt)"></ion-input>
+        </ion-item>
+
+        <ion-item no-lines class="bgcolor v">
+            <p *ngIf="!slideOneForm.controls.lastName.valid  && (slideOneForm.controls.lastName.dirty || submitAttempt)" class="error-message">Please enter a Password.</p>
+        </ion-item>
+
+
+
+        <ion-grid>
+            <ion-row>
+                <ion-col align-self-center>
+                    <div text-center>
+                        <!-- Float the icon right -->
+                        <button type="submit" (click)="logForm()" ion-button icon-right round large [disabled]="!slideOneForm.valid">
+Login  
+  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
+</button>
+                    </div>
+                </ion-col>
+
+
+            </ion-row>
+        </ion-grid>
+    </form>
+
+</ion-content>

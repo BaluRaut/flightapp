@@ -1,0 +1,168 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row responsive-sm>
+            <ion-col col-12 col-sm>
+                <div padding>
+                    <ion-segment [(ngModel)]="journeyType">
+                        <ion-segment-button value="Single Way">
+                            Single Way
+                        </ion-segment-button>
+                        <ion-segment-button value="Return Way">
+                            Return Way
+                        </ion-segment-button>
+                    </ion-segment>
+                </div>
+
+                <div [ngSwitch]="journeyType">
+                    <ion-list *ngSwitchCase="'Single Way'">
+
+                        <form [formGroup]="searchFormOneWay" text-center>
+
+
+                            <ion-item>
+                                <ion-label floating>Enter Origin city </ion-label>
+                                <ion-input formControlName="originCity" type="text " [class.invalid]="!searchFormOneWay.controls.originCity.valid &&
+                                	 searchFormOneWay.controls.originCity.dirty "></ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label floating>Enter Destinaton city </ion-label>
+                                <ion-input formControlName="destinationCity" type="text " [class.invalid]="!searchFormOneWay.controls.destinationCity.valid 
+                                &&	 searchFormOneWay.controls.destinationCity.dirty "></ion-input>
+                            </ion-item>
+
+
+                            <ion-item>
+                                <ion-label floating>Date</ion-label>
+                                <ion-datetime displayFormat="MMM DD YYYY" required min="{{minDate}}" formControlName="startDate"></ion-datetime>
+                            </ion-item>
+
+
+
+                            <ion-item>
+                                <ion-label floating>Passengers</ion-label>
+                                <ion-select formControlName="numberOfPassengers">
+
+                                    <ion-option value="1">1</ion-option>
+                                    <ion-option value="2">2</ion-option>
+                                    <ion-option value="3">3</ion-option>
+                                    <ion-option value="4">4</ion-option>
+                                    <ion-option value="5">6</ion-option>
+                                    <ion-option value="6">7</ion-option>
+                                </ion-select>
+                            </ion-item>
+
+
+                            <ion-item align-self-center>
+                                <div text-center>
+                                    <!-- Float the icon right -->
+                                    <button type="submit" (click)="logForm()" ion-button icon-right round small [disabled]="!searchFormOneWay.valid">
+                                       Search  
+                                  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
+                                  </button>
+                                </div>
+                            </ion-item>
+                        </form>
+
+
+                    </ion-list>
+
+                    <ion-list *ngSwitchCase=" 'Return Way' ">
+
+
+
+                        <form [formGroup]="searchFormTwoWay" text-center>
+
+
+                            <ion-item>
+                                <ion-label floating>Enter Origin city </ion-label>
+                                <ion-input formControlName="originCity" type="text " [class.invalid]="!searchFormTwoWay.controls.originCity.valid &&
+                                	 searchFormTwoWay.controls.originCity.dirty "></ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label floating>Enter Destinaton city </ion-label>
+                                <ion-input formControlName="destinationCity" type="text " [class.invalid]="!searchFormTwoWay.controls.destinationCity.valid &&	 searchFormTwoWay.controls.destinationCity.dirty "></ion-input>
+                            </ion-item>
+
+
+                            <ion-item>
+                                <ion-label floating>Date</ion-label>
+                                <ion-datetime displayFormat="MMM DD YYYY" required min="{{minDate}}" formControlName="startDate"></ion-datetime>
+                            </ion-item>
+
+
+                            <ion-item>
+                                <ion-label floating> Return Date</ion-label>
+                                <ion-datetime displayFormat="MMM DD YYYY" [hidden]="startDate" required min="{{searchFormTwoWay.value.startDate}}" formControlName="returnDate"></ion-datetime>
+                            </ion-item>
+
+
+
+
+                            <ion-item>
+                                <ion-label floating>Passengers</ion-label>
+                                <ion-select formControlName="numberOfPassengers">
+
+                                    <ion-option value="1">1</ion-option>
+                                    <ion-option value="2">2</ion-option>
+                                    <ion-option value="3">3</ion-option>
+                                    <ion-option value="4">4</ion-option>
+                                    <ion-option value="5">6</ion-option>
+                                    <ion-option value="6">7</ion-option>
+                                </ion-select>
+                            </ion-item>
+
+                            <ion-item align-self-center no-lines>
+                                <div text-center>
+                                    <!-- Float the icon right -->
+                                    <button type="submit" (click)="logForm()" ion-button icon-right round small [disabled]="!searchFormTwoWay.valid">
+                                       Search  
+                                  <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
+                                  </button>
+                                </div>
+                            </ion-item>
+                        </form>
+                    </ion-list>
+
+
+                    <ion-list>
+                        <ion-item no-lines>
+                            <ion-label>Refine Flight Search</ion-label>
+
+                            <ion-badge item-right>INR :{{selectedPrice}}</ion-badge>
+
+                        </ion-item>
+                        <ion-item>
+
+                            <ion-range min="{{minPrice}}" max="{{maxPrice}}" step="10000" (ionChange)="getData($event)" snaps="true" [(ngModel)]="selectedPrice" color="primary">
+                                <ion-icon range-left large color="primary" name="thermometer"> {{minPrice}} </ion-icon>
+                                <ion-icon range-right color="primary" name="thermometer"> {{maxPrice}} </ion-icon>
+                            </ion-range>
+                        </ion-item>
+
+                    </ion-list>
+
+
+                </div>
+            </ion-col>
+            <ion-col col-12 col-sm>
+                2 of 2
+            </ion-col>
+
+            <ion-col col-12 col-sm>
+                2 of 3
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+</ion-content>
