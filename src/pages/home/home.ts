@@ -27,9 +27,12 @@ export class HomePage {
     private searchFormTwoWay: FormGroup;
     public singlewaydata: any;
     public returnwaydata: any;
+    public dataTravelInfo: any;
     public dataInfo: any;
+    public dataSearchInfo: any;
     isSingleWay: boolean = false;
     isTwoWay: boolean = false;
+    isPriceBySearch: boolean=false;
 
 
     constructor(public navCtrl: NavController, private formBuilder: FormBuilder) {
@@ -37,10 +40,10 @@ export class HomePage {
         // Api Response data , This will come on user hit the request by clicking search button
 
 
-        this.dataInfo = [{ "originCity": "Mumbai", "at": "20:35", "destinationCity": "Pune", "dt": "18:35", "yan": "Indigo", "startDate": "2017-04-30", "Price": 23232},
+        this.dataTravelInfo = [{ "originCity": "Mumbai", "at": "20:35", "destinationCity": "Pune", "dt": "18:35", "yan": "Indigo", "startDate": "2017-04-30", "Price": 23232 },
             { "originCity": "Pune", "at": "23:25", "destinationCity": "Mumbai", "dt": "21:20", "yan": "Vistara", "startDate": "2017-04-30", "Price": 4434 },
             { "originCity": "Mumbai", "at": "20:10", "destinationCity": "Nah", "dt": "18:00", "yan": "Air India", "startDate": "2017-04-30", "Price": 6434 },
-            { "originCity": "Mumbai", "at": "00:50", "destinationCity": "Pune", "dt": "22:45", "yan": "Jet Airways", "startDate": "2017-04-30", "Price": 5434}
+            { "originCity": "Mumbai", "at": "00:50", "destinationCity": "Pune", "dt": "22:45", "yan": "Jet Airways", "startDate": "2017-04-30", "Price": 5434 }
         ];
 
         this.searchFormOneWay = this.formBuilder.group({
@@ -61,20 +64,24 @@ export class HomePage {
     }
 
 
-// This Will filter data by Price
+    // This Will filter data by Price
 
-getDataByPrice($event,price){
-//calert(price);
-    console.log(price);
+    getDataByPrice($event, price) {
 
-   var dta= _.find(this.dataInfo, function(v){ return ( v.Price > price ) });
-    console.log(dta);
-
-}
+        this.dataSearchInfo = _.find(this.dataTravelInfo, function (v) { return (v.Price > price) });
+    }
     // This function will search the data fromm server response 
 
     searchData() {
+        if (this.isPriceBySearch) {
 
+            this.dataInfo = this.dataSearchInfo;
+        } else {
+            this.dataInfo = this.dataTravelInfo;
+
+        }
+
+        this.isPriceBySearch = false;
 
         if (this.journeyType == "Return Way") {
             this.isTwoWay = true;
