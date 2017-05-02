@@ -1,12 +1,3 @@
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-        <ion-title>Home</ion-title>
-    </ion-navbar>
-</ion-header>
-
 <ion-content padding>
     <ion-grid>
         <ion-row responsive-sm>
@@ -29,6 +20,8 @@
 
 
                             <ion-item>
+                                <ion-auto-complete [dataProvider]="" [options]="{ placeholder : 'Lorem Ipsum' }"></ion-auto-complete>
+
                                 <ion-label floating>Enter Origin city </ion-label>
                                 <ion-input formControlName="originCity" type="text " [class.invalid]="!searchFormOneWay.controls.originCity.valid &&
                                 	 searchFormOneWay.controls.originCity.dirty "></ion-input>
@@ -65,7 +58,7 @@
                             <ion-item align-self-center>
                                 <div text-center>
                                     <!-- Float the icon right -->
-                                    <button type="submit" (click)="logForm()" ion-button icon-right round small [disabled]="!searchFormOneWay.valid">
+                                    <button type="submit" (click)="searchData()" ion-button icon-right round small [disabled]="!searchFormOneWay.valid">
                                        Search  
                                   <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
                                   </button>
@@ -125,7 +118,7 @@
                             <ion-item align-self-center no-lines>
                                 <div text-center>
                                     <!-- Float the icon right -->
-                                    <button type="submit" (click)="logForm()" ion-button icon-right round small [disabled]="!searchFormTwoWay.valid">
+                                    <button type="submit" (click)="searchData()" ion-button icon-right round small [disabled]="!searchFormTwoWay.valid">
                                        Search  
                                   <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon>
                                   </button>
@@ -133,7 +126,6 @@
                             </ion-item>
                         </form>
                     </ion-list>
-
 
                     <ion-list>
                         <ion-item no-lines>
@@ -144,7 +136,7 @@
                         </ion-item>
                         <ion-item>
 
-                            <ion-range min="{{minPrice}}" max="{{maxPrice}}" step="10000" (ionChange)="getData($event)" snaps="true" [(ngModel)]="selectedPrice" color="primary">
+                            <ion-range min="{{minPrice}}" max="{{maxPrice}}" step="10000" (ionChange)="getDataByPrice($event,selectedPrice )" snaps="true" [(ngModel)]="selectedPrice" color="primary">
                                 <ion-icon range-left large color="primary" name="thermometer"> {{minPrice}} </ion-icon>
                                 <ion-icon range-right color="primary" name="thermometer"> {{maxPrice}} </ion-icon>
                             </ion-range>
@@ -156,12 +148,147 @@
                 </div>
             </ion-col>
             <ion-col col-12 col-sm>
-                2 of 2
+
+                <section *ngIf="isSingleWay">
+                    <ion-row>
+                        <ion-col align-self-center>
+                            <div text-center>
+                                <!-- Float the icon right -->
+                                <h1>
+                                    <span class="space">   {{searchFormOneWay.value.originCity}} </span>
+                                <span class="space"> <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon> </span>
+                                <span class="space"> {{searchFormOneWay.value.destinationCity}} </span>
+                                </h1>
+
+
+                            </div>
+                        </ion-col>
+
+                    </ion-row>
+                    <ion-row class="bold">
+                        <ion-col>
+                            AirLine
+                        </ion-col>
+
+                        <ion-col>
+                            Depart
+                        </ion-col>
+
+                        <ion-col>
+                            Arrive
+                        </ion-col>
+
+                        <ion-col>
+                            Duration
+                        </ion-col>
+
+                        <ion-col>
+                            Price
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row *ngFor="let route of singlewaydata">
+                        <ion-col>
+                            {{route.yan}}
+                        </ion-col>
+
+                        <ion-col>
+                            {{route.at}}
+                        </ion-col>
+
+                        <ion-col>
+                            {{route.dt}}
+
+                        </ion-col>
+
+                        <ion-col>
+
+                            {{route.duration}}
+
+                        </ion-col>
+
+                        <ion-col>
+
+                            {{ 2 * 4}}
+                        </ion-col>
+
+                    </ion-row>
+
+                </section>
+
+                <!-- Return Route-->
+                <section *ngIf="isTwoWay">
+
+                    <ion-row>
+                        <ion-col align-self-center>
+                            <div text-center>
+                                <!-- Float the icon right -->
+                                <h1>
+                              <span class="space">  {{searchFormTwoWay.value.destinationCity}} </span>
+                           <span class="space"> <ion-icon ios="ios-arrow-forward" md="md-arrow-forward"></ion-icon> </span>
+                           <span class="space"> {{searchFormTwoWay.value.originCity}} </span>
+                           </h1>
+
+
+                            </div>
+                        </ion-col>
+
+                    </ion-row>
+                    <ion-row class="bold">
+                        <ion-col>
+                            AirLine
+                        </ion-col>
+
+                        <ion-col>
+                            Depart
+                        </ion-col>
+
+                        <ion-col>
+                            Arrive
+                        </ion-col>
+
+                        <ion-col>
+                            Duration
+                        </ion-col>
+
+                        <ion-col>
+                            Price
+                        </ion-col>
+
+                    </ion-row>
+
+                    <ion-row *ngFor="let route of returnwaydata">
+                        <ion-col>
+                            {{route.yan}}
+                        </ion-col>
+
+                        <ion-col>
+                            {{route.at}}
+                        </ion-col>
+
+                        <ion-col>
+                            {{route.dt}}
+
+                        </ion-col>
+
+                        <ion-col>
+
+                            {{route.duration}}
+
+                        </ion-col>
+
+                        <ion-col>
+
+                            {{ 2 * 4}}
+                        </ion-col>
+
+                    </ion-row>
+
+                </section>
+
             </ion-col>
 
-            <ion-col col-12 col-sm>
-                2 of 3
-            </ion-col>
 
         </ion-row>
     </ion-grid>

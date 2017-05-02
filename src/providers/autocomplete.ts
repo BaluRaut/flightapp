@@ -1,22 +1,17 @@
-import { Injectable } from '@angular/core';
+import {AutoCompleteService} from 'ionic2-auto-complete';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import {Injectable} from "@angular/core";
+import 'rxjs/add/operator/map'
 
-/*
-  Generated class for the Autocomplete provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
-export class Autocomplete {
+export class Autocomplete implements AutoCompleteService {
+  labelAttribute = "name";
 
-  constructor(public http: Http) {
-    console.log('Hello Autocomplete Provider');
+  constructor(private http:Http) {
+
   }
-
-    getResults(keyword:string) {
-    return this.http.get("getdata.json")
+  getResults(keyword:string) {
+    return this.http.get("https://restcountries.eu/rest/v1/name/"+keyword)
       .map(
         result =>
         {
@@ -24,5 +19,4 @@ export class Autocomplete {
             .filter(item => item.name.toLowerCase().startsWith(keyword.toLowerCase()) )
         });
   }
-
 }
